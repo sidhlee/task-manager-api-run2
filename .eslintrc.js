@@ -20,5 +20,6 @@ module.exports = {
     'prefer-template': 'off',
     'prefer-destructuring': 'off',
     'arrow-body-style': 'off',
+    'no-underscore-dangle': 'off',
   },
 }
