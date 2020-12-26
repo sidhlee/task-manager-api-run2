@@ -14,4 +14,4 @@ usersRouter.post('/login', login)
 usersRouter.get('/me', auth, (req, res) => res.json({ user: req.user }))
 usersRouter.patch('/me', auth, updateUser)
 
-module.exports = { usersRouter }
+module.exports = usersRouter

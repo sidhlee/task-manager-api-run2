@@ -18,7 +18,7 @@ const auth = async (req, res, next) => {
 
     req.user = user
 
-    next()
+    return next()
   } catch (err) {
     return next(new HttpError('Authentication failed!', 401))
   }
