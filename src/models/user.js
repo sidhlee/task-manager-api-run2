@@ -51,6 +51,9 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+/* pre save middleware */
+
+// - Hash modified (or new) password before saving it to the database.
 userSchema.pre('save', async function () {
   const user = this
   if (user.isModified('password')) {
@@ -59,7 +62,7 @@ userSchema.pre('save', async function () {
   // you don't need to call next() if your function returns a Promise
 })
 
-// Document instance methods
+/* Document instance methods */
 
 /**
  * generate token from doc._id
@@ -89,7 +92,7 @@ userSchema.methods.toJSON = function () {
   return userObj
 }
 
-// Plugins
+/* Plugins */
 userSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('User', userSchema)
