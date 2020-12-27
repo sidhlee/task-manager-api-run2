@@ -1,4 +1,5 @@
 const express = require('express')
+const { auth } = require('../middlewares')
 
 const {
   getUserTasks,
@@ -8,12 +9,14 @@ const {
   deleteTask,
 } = require('../controllers/tasks-controllers')
 
-const taskRouter = express.Router()
+const tasksRouter = express.Router()
 
-taskRouter.get('/', getUserTasks)
-taskRouter.get('/:id', getTaskById)
-taskRouter.post('/', createTask)
-taskRouter.patch('/:id', updateTask)
-taskRouter.delete('/:id', deleteTask)
+tasksRouter.use(auth) // apply auth middleware to all tasks routes
 
-module.exports = taskRouter
+tasksRouter.get('/', getUserTasks)
+tasksRouter.get('/:id', getTaskById)
+tasksRouter.post('/', createTask)
+tasksRouter.patch('/:id', updateTask)
+tasksRouter.delete('/:id', deleteTask)
+
+module.exports = tasksRouter

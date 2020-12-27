@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Task = require('./task')
 
 const userSchema = new mongoose.Schema(
   {
@@ -40,6 +41,13 @@ const userSchema = new mongoose.Schema(
           )
         }
       },
+      tasks: [
+        {
+          type: mongoose.Types.ObjectId,
+          required: true,
+          ref: Task,
+        },
+      ],
     },
     // Storing tokens in db is more trouble(extra security burden) than what it's worth.
     // You can still logout from one device and still be logged in on other devices

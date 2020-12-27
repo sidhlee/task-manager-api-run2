@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-const { usersRouter, taskRouter } = require('./routers')
+const { usersRouter, tasksRouter } = require('./routers')
 
 mongoose.connect(
   process.env.MONGO_URI,
@@ -18,7 +18,7 @@ const app = express()
 
 app.use(express.json())
 app.use('/users', usersRouter)
-app.use('/tasks', taskRouter)
+app.use('/tasks', tasksRouter)
 
 // Handles error thrown before sending response
 app.use((err, req, res, next) => {
