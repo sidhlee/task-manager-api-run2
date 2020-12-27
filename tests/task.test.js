@@ -20,6 +20,7 @@ test('Should get page of tasks')
 test('Should create task for user')
 test('Should not create task with invalid description')
 test('Should not create task with invalid completed')
+test('Should have completed field by default')
 
 /* updateTask */
 test('Should not update other users tasks')
