@@ -34,11 +34,29 @@ test('Should signup a new user', async () => {
   expect(response.body.token.length).toBeGreaterThan(10)
 })
 
-test('Should not signup with invalid name')
+test('Should not signup with invalid name', async () => {
+  await request(app)
+    .post('/users/signup')
+    .send({
+      name: '',
+      email: 'abc@test.com',
+      password: '123123',
+    })
+    .expect(422)
+})
 
-test('Should not signup with invalid email')
+test('Should not signup with invalid email', async () => {
+  await request(app)
+    .post('/users/signup')
+    .send({
+      name: 'John',
+      email: 'abc',
+      password: '123123',
+    })
+    .expect(422)
+})
 
-test('Should not signup with invalid password')
+test('Should not signup with invalid password', () => {})
 
 // POST: /login
 
@@ -72,27 +90,27 @@ test('Should not login with wrong password', async () => {
 
 // GET: /me
 
-test('Should get profile for authenticated user')
+test('Should get profile for authenticated user', () => {})
 
-test('Should not get profile for unauthenticated user')
+test('Should not get profile for unauthenticated user', () => {})
 
 // PATCH: /me
-test('Should update valid user fields')
+test('Should update valid user fields', () => {})
 
-test('Should not update invalid user fields')
+test('Should not update invalid user fields', () => {})
 
-test('Should not update user if unauthenticated')
+test('Should not update user if unauthenticated', () => {})
 
-test('Should not update user with invalid name')
+test('Should not update user with invalid name', () => {})
 
-test('Should not update user with invalid email')
+test('Should not update user with invalid email', () => {})
 
-test('SHould not update user with invalid password')
+test('SHould not update user with invalid password', () => {})
 
 // DELETE: /me
-test('Should delete user')
+test('Should delete user', () => {})
 
-test('Should not delete unauthenticated user')
+test('Should not delete unauthenticated user', () => {})
 
 // POST: /me/avatar
-test('Should upload avatar image')
+test('Should upload avatar image', () => {})

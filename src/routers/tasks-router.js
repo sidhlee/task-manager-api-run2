@@ -1,5 +1,6 @@
 const express = require('express')
-const { auth } = require('../middlewares')
+const { check } = require('express-validator')
+const { auth, validate } = require('../middlewares')
 
 const {
   getUserTasks,
@@ -15,8 +16,10 @@ tasksRouter.use(auth) // apply auth middleware to all tasks routes
 
 tasksRouter.get('/', getUserTasks)
 tasksRouter.get('/:id', getTaskById)
+tasksRouter.delete('/:id', deleteTask)
+
+tasksRouter.use([check('description').not().isEmpty()], validate)
 tasksRouter.post('/', createTask)
 tasksRouter.patch('/:id', updateTask)
-tasksRouter.delete('/:id', deleteTask)
 
 module.exports = tasksRouter

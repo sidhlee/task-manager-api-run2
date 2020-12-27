@@ -24,8 +24,7 @@ const signup = async (req, res, next) => {
       token,
     })
   } catch (err) {
-    console.log(err)
-    return res.status(400)
+    return res.json(err)
   }
 }
 

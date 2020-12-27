@@ -24,8 +24,7 @@ app.use('/tasks', tasksRouter)
 app.use((err, req, res, next) => {
   // If already sent the response, don't send it again
   if (req.headerSent) {
-    console.log(err)
-    return next()
+    return next(err)
   }
   return res.status(err.status || 500).json({
     message: err.message || 'An unknown error occurred!',
