@@ -7,6 +7,9 @@
     "dev": "env-cmd -f ./src/config/dev.env nodemon src/index.js",
     "test": "env-cmd -f ./src/config/dev.env jest --watch --detectOpenHandles"
   },
+  "engines": {
+    "node": ">=8.3.0"
+  },
   "jest": {
     "testEnvironment": "node"
   },

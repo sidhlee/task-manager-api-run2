@@ -4,6 +4,7 @@ const {
   userOne,
   userTwoId,
   userTwo,
+  token,
   setupDatabase,
 } = require('./fixtures/db')
 const app = require('../src/app')
@@ -90,27 +91,98 @@ test('Should not login with wrong password', async () => {
 
 // GET: /me
 
-test('Should get profile for authenticated user', () => {})
+test('Should get profile for authenticated user', async () => {
+  await request(app)
+    .get('/users/me')
+    .set('Authorization', token)
+    .send()
+    .expect(200)
+})
 
-test('Should not get profile for unauthenticated user', () => {})
+test('Should not get profile for unauthenticated user', async () => {
+  await request(app).get('/users/me').send().expect(401)
+})
 
 // PATCH: /me
-test('Should update valid user fields', () => {})
+test('Should update valid user fields', async () => {
+  const updates = {
+    name: 'updated',
+    email: 'updated@test.com',
+    password: '321321',
+  }
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', token)
+    .send(updates)
+    .expect(200)
 
-test('Should not update invalid user fields', () => {})
+  const user = await User.findById(userOneId)
+  expect(user).toMatchObject({
+    name: updates.name,
+    email: updates.email,
+    // password is not returned
+  })
+})
 
-test('Should not update user if unauthenticated', () => {})
+test('Should not update invalid user fields', async () => {
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', token)
+    .send({ 'invalid field': 'invalid value' })
+    .expect(422)
+})
 
-test('Should not update user with invalid name', () => {})
+test('Should not update user if unauthenticated', async () => {
+  await request(app)
+    .patch('/users/me')
+    .send({ description: 'valid update' })
+    .expect(401)
+})
 
-test('Should not update user with invalid email', () => {})
+test('Should not update user with invalid name', async () => {
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', token)
+    .send({ name: '' })
+    .expect(422)
+})
 
-test('SHould not update user with invalid password', () => {})
+test('Should not update user with invalid email', async () => {
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', token)
+    .send({ email: ' email ' })
+    .expect(422)
+})
+
+test('SHould not update user with invalid password', async () => {
+  await request(app)
+    .patch('/users/me')
+    .set('Authorization', token)
+    .send({ password: ' 333 22' })
+    .expect(422)
+})
 
 // DELETE: /me
-test('Should delete user', () => {})
+test('Should delete user', async () => {
+  await request(app)
+    .delete('/users/me')
+    .set('Authorization', token)
+    .send()
+    .expect(200)
 
-test('Should not delete unauthenticated user', () => {})
+  const user = await User.findById(userOneId)
+  expect(user).toBeNull()
+})
+
+test('Should not delete unauthenticated user', async () => {
+  await request(app).delete('/users/me').send().expect(401)
+
+  const user = await User.findById(userOneId)
+  expect(user).not.toBeNull()
+})
 
 // POST: /me/avatar
 test('Should upload avatar image', () => {})
+test('Should get avatar image', () => {})
+test('Should delete avatar image', () => {})

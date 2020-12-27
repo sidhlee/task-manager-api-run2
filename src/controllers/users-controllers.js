@@ -64,8 +64,17 @@ const updateUser = async (req, res, next) => {
   return res.json(req.user)
 }
 
+const deleteUser = async (req, res, next) => {
+  await req.user.remove() // this removes the user from the database
+  // req.user still exists
+  return res.json({ user: req.user })
+}
+
+// TODO: add POST:/me/avatar, DELETE:/me/avatar, GET:/me/avatar
+
 module.exports = {
   signup,
   login,
   updateUser,
+  deleteUser,
 }

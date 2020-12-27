@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const { ObjectId } = require('mongoose').Types
 
 const { User, Task } = require('../../src/models')
@@ -9,6 +10,8 @@ const userOne = {
   email: 'one@test.com',
   password: '123123',
 }
+const token =
+  'Bearer ' + jwt.sign({ id: userOneId.toString() }, process.env.JWT_SECRET)
 
 const userTwoId = new ObjectId()
 const userTwo = {
@@ -39,6 +42,7 @@ const taskThree = {
 
 const setupDatabase = async () => {
   await User.deleteMany()
+  await Task.deleteMany()
   await new User(userOne).save()
   await new User(userTwo).save()
   await new Task(taskOne).save()
@@ -49,6 +53,7 @@ const setupDatabase = async () => {
 module.exports = {
   userOneId,
   userOne,
+  token,
   userTwoId,
   userTwo,
   taskOneId,

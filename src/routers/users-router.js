@@ -6,6 +6,7 @@ const {
   signup,
   login,
   updateUser,
+  deleteUser,
 } = require('../controllers/users-controllers')
 
 const usersRouter = express.Router()
@@ -60,5 +61,7 @@ usersRouter.patch(
   validate,
   updateUser
 )
+
+usersRouter.delete('/me', auth, deleteUser)
 
 module.exports = usersRouter

@@ -61,7 +61,9 @@ userSchema.pre('save', async function () {
 function generateToken() {
   const user = this
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: '7d',
+  })
 
   // not storing tokens to db
   // user.tokens = user.tokens.concat(token)

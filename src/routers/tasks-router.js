@@ -18,8 +18,17 @@ tasksRouter.get('/', getUserTasks)
 tasksRouter.get('/:id', getTaskById)
 tasksRouter.delete('/:id', deleteTask)
 
-tasksRouter.use([check('description').not().isEmpty()], validate)
-tasksRouter.post('/', createTask)
-tasksRouter.patch('/:id', updateTask)
+tasksRouter.post(
+  '/',
+  [check('description').not().isEmpty()],
+  validate,
+  createTask
+)
+tasksRouter.patch(
+  '/:id',
+  [check('description').not().isEmpty()],
+  validate,
+  updateTask
+)
 
 module.exports = tasksRouter
