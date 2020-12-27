@@ -15,12 +15,15 @@ usersRouter.get('/me', auth, (req, res) => res.json({ user: req.user }))
 const passwordValidator = (v) => {
   const hasSpace = /\s/.test(v)
   const hasThreeRepeatedCharacters = /([\s\S])\1\1/.test(v)
+
   if (hasSpace) {
     throw new Error('Password cannot contain space.')
   }
   if (hasThreeRepeatedCharacters) {
     throw new Error('Password cannot contain more than 3 repeated characters.')
   }
+  // otherwise valid
+  return true
 }
 
 usersRouter.post(
@@ -36,17 +39,26 @@ usersRouter.post(
   login
 )
 
-/* Routes that takes name, email, and password */
-usersRouter.use(
+usersRouter.post(
+  '/signup',
   [
     check('name').not().isEmpty(),
     check('email').normalizeEmail().isEmail(),
     check('password').custom(passwordValidator),
   ],
-  validate
+  validate,
+  signup
 )
-
-usersRouter.post('/signup', signup)
-usersRouter.patch('/me', auth, updateUser)
+usersRouter.patch(
+  '/me',
+  auth,
+  [
+    check('name').not().isEmpty(),
+    check('email').normalizeEmail().isEmail(),
+    check('password').custom(passwordValidator),
+  ],
+  validate,
+  updateUser
+)
 
 module.exports = usersRouter
