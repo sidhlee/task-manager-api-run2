@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
-const User = require('../models/user')
-const HttpError = require('../models/http-error')
+const { User, HttpError } = require('../models')
 
 const signup = async (req, res, next) => {
   const { name, email, password } = req.body

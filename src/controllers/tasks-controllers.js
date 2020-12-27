@@ -1,6 +1,6 @@
 const HttpError = require('../models/http-error')
 
-const Task = require('../models/task')
+const { Task } = require('../models')
 
 const getTaskById = async (req, res, next) => {
   const { id } = req.params

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const User = require('../../src/models/user')
+const { User } = require('../../src/models')
 
 const userOneId = new mongoose.Types.ObjectId()
 const userOne = {
