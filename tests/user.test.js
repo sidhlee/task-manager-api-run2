@@ -4,7 +4,7 @@ const {
   userOne,
   userTwoId,
   userTwo,
-  token,
+  bearerToken,
   setupDatabase,
 } = require('./fixtures/db')
 const app = require('../src/app')
@@ -94,7 +94,7 @@ test('Should not login with wrong password', async () => {
 test('Should get profile for authenticated user', async () => {
   await request(app)
     .get('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send()
     .expect(200)
 })
@@ -112,7 +112,7 @@ test('Should update valid user fields', async () => {
   }
   await request(app)
     .patch('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send(updates)
     .expect(200)
 
@@ -127,7 +127,7 @@ test('Should update valid user fields', async () => {
 test('Should not update invalid user fields', async () => {
   await request(app)
     .patch('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send({ 'invalid field': 'invalid value' })
     .expect(422)
 })
@@ -142,7 +142,7 @@ test('Should not update user if unauthenticated', async () => {
 test('Should not update user with invalid name', async () => {
   await request(app)
     .patch('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send({ name: '' })
     .expect(422)
 })
@@ -150,7 +150,7 @@ test('Should not update user with invalid name', async () => {
 test('Should not update user with invalid email', async () => {
   await request(app)
     .patch('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send({ email: ' email ' })
     .expect(422)
 })
@@ -158,7 +158,7 @@ test('Should not update user with invalid email', async () => {
 test('SHould not update user with invalid password', async () => {
   await request(app)
     .patch('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send({ password: ' 333 22' })
     .expect(422)
 })
@@ -167,7 +167,7 @@ test('SHould not update user with invalid password', async () => {
 test('Should delete user', async () => {
   await request(app)
     .delete('/users/me')
-    .set('Authorization', token)
+    .set('Authorization', bearerToken)
     .send()
     .expect(200)
 

@@ -10,7 +10,7 @@ const userOne = {
   email: 'one@test.com',
   password: '123123',
 }
-const token =
+const bearerToken =
   'Bearer ' + jwt.sign({ id: userOneId.toString() }, process.env.JWT_SECRET)
 
 const userTwoId = new ObjectId()
@@ -26,6 +26,7 @@ const taskOne = {
   _id: taskOneId,
   description: 'taskOne',
   creator: userOneId,
+  completed: true,
 }
 const taskTwoId = new ObjectId()
 const taskTwo = {
@@ -36,7 +37,7 @@ const taskTwo = {
 const taskThreeId = new ObjectId()
 const taskThree = {
   _id: taskThreeId,
-  description: 'taskOne',
+  description: 'taskThree',
   creator: userTwoId,
 }
 
@@ -53,7 +54,7 @@ const setupDatabase = async () => {
 module.exports = {
   userOneId,
   userOne,
-  token,
+  bearerToken,
   userTwoId,
   userTwo,
   taskOneId,

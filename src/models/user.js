@@ -41,6 +41,13 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+/* Virtual field */
+userSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'creator',
+})
+
 /* pre save middleware */
 
 // - Hash modified (or new) password before saving it to the database.
